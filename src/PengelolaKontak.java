@@ -1,19 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.*;
+import java.sql.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author acer
- */
 public class PengelolaKontak extends javax.swing.JFrame {
 
     /**
      * Creates new form PengelolaKontak
      */
     public PengelolaKontak() {
-        initComponents();
+         initComponents();
+         tampilkanData(); // Menampilkan data saat aplikasi pertama kali dibuka
+
     }
 
     /**
@@ -36,11 +40,17 @@ public class PengelolaKontak extends javax.swing.JFrame {
         txfNo = new javax.swing.JTextField();
         cbKategori = new javax.swing.JComboBox<>();
         txfEmail = new javax.swing.JTextField();
-        btnSimpan = new javax.swing.JButton();
+        btnTambah = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        txfCari = new javax.swing.JTextField();
+        btnCari = new javax.swing.JButton();
+        btnSimpan = new javax.swing.JButton();
+        btnImpor = new javax.swing.JButton();
+        btnEkspor = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -59,13 +69,28 @@ public class PengelolaKontak extends javax.swing.JFrame {
 
         jLabel5.setText("Kategori");
 
-        cbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Teman", "Keluarga", "Pekerjaan", "Orang tua", " " }));
 
-        btnSimpan.setText("Simpan");
+        btnTambah.setText("Tambah");
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahActionPerformed(evt);
+            }
+        });
 
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnHapus.setText("Hapus");
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -78,42 +103,99 @@ public class PengelolaKontak extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTable1AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+
+        jLabel6.setText("Cari");
+
+        txfCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfCariActionPerformed(evt);
+            }
+        });
+
+        btnCari.setText("Cari");
+        btnCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCariActionPerformed(evt);
+            }
+        });
+
+        btnSimpan.setText("Simpan");
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanActionPerformed(evt);
+            }
+        });
+
+        btnImpor.setText("Impor");
+        btnImpor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImporActionPerformed(evt);
+            }
+        });
+
+        btnEkspor.setText("Ekspor ");
+        btnEkspor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEksporActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(85, 85, 85)
-                                .addComponent(jLabel1))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txfNama)
-                                    .addComponent(txfNo)
-                                    .addComponent(txfEmail)
-                                    .addComponent(cbKategori, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSimpan)
-                            .addComponent(btnEdit)
-                            .addComponent(btnHapus))
-                        .addGap(0, 24, Short.MAX_VALUE))
+                        .addGap(85, 85, 85)
+                        .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jScrollPane1)))
-                .addContainerGap())
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txfEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfNo, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfNama, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbKategori, 0, 170, Short.MAX_VALUE))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnTambah)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEdit)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEkspor))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnSimpan)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnHapus))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txfCari)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(btnCari, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnImpor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,23 +206,29 @@ public class PengelolaKontak extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txfNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSimpan))
+                    .addComponent(jLabel6)
+                    .addComponent(txfCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCari))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txfNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(btnEdit))
-                .addGap(22, 22, 22)
+                    .addComponent(jLabel3))
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(btnHapus))
+                    .addComponent(btnSimpan)
+                    .addComponent(btnHapus)
+                    .addComponent(btnImpor))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(btnTambah)
+                    .addComponent(btnEdit)
+                    .addComponent(btnEkspor))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -154,14 +242,222 @@ public class PengelolaKontak extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
+        String nama = txfNama.getText();
+        String noHandphone = txfNo.getText();
+        String email = txfEmail.getText();
+        String kategori = (String) cbKategori.getSelectedItem();
+
+        if (nama.isEmpty() || noHandphone.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Harap isi semua data!");
+            return;
+        }
+
+        if (!noHandphone.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Nomor handphone harus berupa angka!");
+            return;
+        }
+
+        if (!email.matches("^[\\w-.]+@[\\w-]+\\.[a-zA-Z]{2,}$")) {
+            JOptionPane.showMessageDialog(this, "Format email tidak valid!");
+            return;
+        }
+
+        databaseHelper dbHelper = new databaseHelper();
+        dbHelper.addContact(nama, noHandphone, email, kategori);
+
+        JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
+        tampilkanData();
+        clearForm();
+    }//GEN-LAST:event_btnTambahActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+    int row = jTable1.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih baris yang ingin diubah!");
+            return;
+        }
+
+        int id = Integer.parseInt(jTable1.getValueAt(row, 0).toString());
+        String nama = txfNama.getText();
+        String noHandphone = txfNo.getText();
+        String email = txfEmail.getText();
+        String kategori = (String) cbKategori.getSelectedItem();
+
+        if (nama.isEmpty() || noHandphone.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Harap isi semua data!");
+            return;
+        }
+
+        databaseHelper dbHelper = new databaseHelper();
+        dbHelper.updateContact(id, nama, noHandphone, email, kategori);
+
+        JOptionPane.showMessageDialog(this, "Data berhasil diubah!");
+        tampilkanData();
+        clearForm();
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+     int row = jTable1.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih baris yang ingin dihapus!");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin menghapus data ini?");
+        if (confirm != JOptionPane.YES_OPTION) return;
+
+        int id = Integer.parseInt(jTable1.getValueAt(row, 0).toString());
+        databaseHelper dbHelper = new databaseHelper();
+        dbHelper.deleteContact(id);
+
+        JOptionPane.showMessageDialog(this, "Data berhasil dihapus!");
+        tampilkanData();
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
+         tampilkanData();
+    }//GEN-LAST:event_jTable1AncestorAdded
+
+    private void txfCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfCariActionPerformed
+        cariData(); 
+    }//GEN-LAST:event_txfCariActionPerformed
+
+    private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
+         cariData(); // Panggil metode untuk mencari data
+}
+
+private void cariData() {
+    String keyword = txfCari.getText().trim(); // Ambil kata kunci dari input
+    String query;
+    
+    // Jika kata kunci kosong, ambil semua data
+    if (keyword.isEmpty()) {
+        query = "SELECT * FROM kontak"; // Query untuk mengambil semua data
+    } else {
+        query = "SELECT * FROM kontak WHERE nama LIKE ? OR nomor_handphone LIKE ? OR email LIKE ? OR kategori LIKE ?";
+    }
+
+    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kontak db", "root", "");
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+
+        // Jika ada kata kunci, set parameter untuk pencarian
+        if (!keyword.isEmpty()) {
+            String formattedKeyword = "%" + keyword + "%";
+            stmt.setString(1, formattedKeyword);
+            stmt.setString(2, formattedKeyword);
+            stmt.setString(3, formattedKeyword);
+            stmt.setString(4, formattedKeyword);
+        }
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            // Inisialisasi model tabel
+            DefaultTableModel model = new DefaultTableModel(
+                new String[]{"ID", "Nama", "Nomor Handphone", "Email", "Kategori"}, 0
+            );
+
+            // Tambahkan data dari ResultSet ke model tabel
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("id"),
+                    rs.getString("nama"),
+                    rs.getString("nomor_handphone"),
+                    rs.getString("email"),
+                    rs.getString("kategori")
+                });
+            }
+
+            // Set model tabel ke jTable1
+            jTable1.setModel(model);
+
+            // Tampilkan pesan jika tidak ada data yang ditemukan
+            if (model.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Data tidak ditemukan!");
+            }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat pencarian: " + e.getMessage());
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_btnCariActionPerformed
+
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+       simpanDataKeCSV(); // Panggil metode untuk menyimpan data ke file CSV
+}
+
+private void simpanDataKeCSV() {
+    // Membuka JFileChooser untuk memilih lokasi dan nama file
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Simpan Data ke CSV");
+
+    // Mengatur filter untuk file CSV
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV Files", "csv");
+    fileChooser.setFileFilter(filter);
+
+    // Menampilkan dialog simpan file
+    int userSelection = fileChooser.showSaveDialog(this);
+    if (userSelection != JFileChooser.APPROVE_OPTION) {
+        // Jika pengguna membatalkan, keluar dari metode
+        return;
+    }
+
+    // Mendapatkan file yang dipilih oleh pengguna
+    File fileToSave = fileChooser.getSelectedFile();
+    
+    // Jika file tidak memiliki ekstensi .csv, tambahkan .csv
+    if (!fileToSave.getName().endsWith(".csv")) {
+        fileToSave = new File(fileToSave.getAbsolutePath() + ".csv");
+    }
+
+    // Ambil data dari jTable1
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileToSave))) {
+        // Menulis header (kolom) ke file CSV
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            writer.write(model.getColumnName(i));
+            if (i < model.getColumnCount() - 1) {
+                writer.write(","); // Pisahkan dengan koma
+            }
+        }
+        writer.newLine(); // Pindah baris setelah header
+
+        // Menulis data ke file CSV
+        for (int row = 0; row < model.getRowCount(); row++) {
+            for (int col = 0; col < model.getColumnCount(); col++) {
+                writer.write(model.getValueAt(row, col).toString());
+                if (col < model.getColumnCount() - 1) {
+                    writer.write(","); // Pisahkan dengan koma
+                }
+            }
+            writer.newLine(); // Pindah baris setelah setiap baris data
+        }
+        
+        // Tampilkan pesan berhasil
+        JOptionPane.showMessageDialog(this, "Data berhasil disimpan ke " + fileToSave.getAbsolutePath());
+        
+    } catch (IOException e) {
+        // Tangani error jika terjadi masalah saat menulis ke file
+        JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void btnImporActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImporActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnImporActionPerformed
+
+    private void btnEksporActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEksporActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEksporActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,9 +495,13 @@ public class PengelolaKontak extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCari;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnEkspor;
     private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnImpor;
     private javax.swing.JButton btnSimpan;
+    private javax.swing.JButton btnTambah;
     private javax.swing.JComboBox<String> cbKategori;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -209,11 +509,48 @@ public class PengelolaKontak extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txfCari;
     private javax.swing.JTextField txfEmail;
     private javax.swing.JTextField txfNama;
     private javax.swing.JTextField txfNo;
     // End of variables declaration//GEN-END:variables
+
+    private void tampilkanData() {
+    databaseHelper dbHelper = new databaseHelper();
+    ResultSet rs = dbHelper.getContacts();
+
+
+        DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nama", "Nomor Handphone", "Email", "Kategori"}, 0);
+
+        try {
+            while (rs != null && rs.next()) {
+                model.addRow(new Object[]{
+                        rs.getInt("id"),
+                        rs.getString("nama"),
+                        rs.getString("nomor_handphone"),
+                        rs.getString("email"),
+                        rs.getString("kategori")
+                });
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.getStatement().getConnection().close();
+            } catch (SQLException e) {
+            }
+        }
+        jTable1.setModel(model);
+    }
+
+    private void clearForm() {
+        txfNama.setText("");
+        txfNo.setText("");
+        txfEmail.setText("");
+        cbKategori.setSelectedIndex(0);
+    }
 }
