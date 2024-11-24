@@ -51,8 +51,6 @@ public class PengelolaKontak extends javax.swing.JFrame {
         txfCari = new javax.swing.JTextField();
         btnCari = new javax.swing.JButton();
         btnSimpan = new javax.swing.JButton();
-        btnImpor = new javax.swing.JButton();
-        btnEkspor = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -118,6 +116,11 @@ public class PengelolaKontak extends javax.swing.JFrame {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel6.setText("Cari");
@@ -141,22 +144,6 @@ public class PengelolaKontak extends javax.swing.JFrame {
         btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSimpanActionPerformed(evt);
-            }
-        });
-
-        btnImpor.setBackground(new java.awt.Color(255, 204, 204));
-        btnImpor.setText("Impor");
-        btnImpor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImporActionPerformed(evt);
-            }
-        });
-
-        btnEkspor.setBackground(new java.awt.Color(255, 204, 204));
-        btnEkspor.setText("Ekspor ");
-        btnEkspor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEksporActionPerformed(evt);
             }
         });
 
@@ -197,10 +184,7 @@ public class PengelolaKontak extends javax.swing.JFrame {
                             .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnImpor, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnEkspor, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnCari, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addComponent(btnCari)
                 .addGap(54, 54, 54))
         );
         jPanel1Layout.setVerticalGroup(
@@ -224,15 +208,14 @@ public class PengelolaKontak extends javax.swing.JFrame {
                     .addComponent(txfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(btnSimpan)
-                    .addComponent(btnHapus)
-                    .addComponent(btnImpor))
+                    .addComponent(btnHapus))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTambah)
-                    .addComponent(btnEkspor, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)
+                        .addComponent(btnTambah)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
         );
@@ -457,13 +440,16 @@ private void simpanDataKeCSV() {
     }
     }//GEN-LAST:event_btnSimpanActionPerformed
 
-    private void btnImporActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImporActionPerformed
-        
-    }//GEN-LAST:event_btnImporActionPerformed
-
-    private void btnEksporActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEksporActionPerformed
-        
-    }//GEN-LAST:event_btnEksporActionPerformed
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int row = jTable1.getSelectedRow();
+        if (row != -1) {
+            // Isi form berdasarkan data di tabel
+            txfNama.setText(jTable1.getValueAt(row, 1).toString()); // Asumsi kolom 1 adalah nama
+            txfNo.setText(jTable1.getValueAt(row, 2).toString());   // Asumsi kolom 2 adalah no handphone
+            txfEmail.setText(jTable1.getValueAt(row, 3).toString());// Asumsi kolom 3 adalah email
+            cbKategori.setSelectedItem(jTable1.getValueAt(row, 4).toString()); // Asumsi kolom 4 adalah kategori
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -503,9 +489,7 @@ private void simpanDataKeCSV() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCari;
     private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnEkspor;
     private javax.swing.JButton btnHapus;
-    private javax.swing.JButton btnImpor;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JButton btnTambah;
     private javax.swing.JComboBox<String> cbKategori;
